@@ -69,27 +69,45 @@ toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
 docs <- tm_map(docs, toSpace, "/")
 docs <- tm_map(docs, toSpace, "@")
 docs <- tm_map(docs, toSpace, "\\|")
-```
-
-## Remove punctuations
-```
-docs <- tm_map
+docs <- tm_map(docs, toSpace, "and")
+docs <- tm_map(docs, toSpace, "the")
+docs <- tm_map(docs, toSpace, "will")
+docs <- tm_map(docs, toSpace, "for")
+docs <- tm_map(docs, toSpace, "are")
+docs <- tm_map(docs, toSpace, "but")
+docs <- tm_map(docs, toSpace, "from")
+docs <- tm_map(docs, toSpace, "not")
+docs <- tm_map(docs, toSpace, "this")
+docs <- tm_map(docs, toSpace, "that")
+docs <- tm_map(docs, toSpace, "again")
+docs <- tm_map(docs, toSpace, "with")
+docs <- tm_map(docs, toSpace, "our")
+docs <- tm_map(docs, toSpace, "while")
+docs <- tm_map(docs, toSpace, "which")
+docs <- tm_map(docs, toSpace, "its")
+docs <- tm_map(docs, toSpace, "too")
+docs <- tm_map(docs, toSpace, "eign")
+docs <- tm_map(docs, toSpace, "toge")
 ```
 
 ## Convert the text to lower case
 ```
 docs <- tm_map(docs, content_transformer(tolower))
+```
+## Display word count and wordcloud
 
+```
 inspect(docs)
 
 dtm <- TermDocumentMatrix(docs)
 m <- as.matrix(dtm)
 v <- sort(rowSums(m),decreasing=TRUE)
 d <- data.frame(word = names(v),freq=v)
-head(d, 10)
-
+head(d, 50)
+```
+```
 set.seed(1234)
-wordcloud(words = d$word, freq = d$freq, min.freq = 1,
-          max.words=200, random.order=FALSE, rot.per=0.35,
-          colors=brewer.pal(8, "Paired"))
+wordcloud(words = d$word, freq = d$freq, min.freq = 2,
+          max.words=150, random.order=FALSE, rot.per=0.35,
+          colors=brewer.pal(12, "Paired"))
 ```
